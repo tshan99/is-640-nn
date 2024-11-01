@@ -4,10 +4,10 @@ class Value:
     def __init__(self, data, _children=(), _op=''):
         self.data = data
         self.grad = 0
-        # internal variables used for autograd graph construction
+       
         self._backward = lambda: None
         self._prev = set(_children)
-        self._op = _op # 
+        self._op = _op # the op that produced this node, for graphviz / debugging / etc
 
     def __repr__(self):
         return f"Value(data={self.data}, grad={self.grad})"
@@ -55,7 +55,7 @@ class Value:
     
     def backward(self):
 
-        # topological order all of the children in the graph
+        # topological order of all of the children in the graph
         topo = []
         visited = set()
         def build_topo(v):
@@ -66,7 +66,7 @@ class Value:
                 topo.append(v)
         build_topo(self)
 
-        # go one variable at a time and apply the chain rule to get its gradient
+        # visit one variable at a time and apply the chain rule to get its gradient
         self.grad = 1
         for v in reversed(topo):
             v._backward()
