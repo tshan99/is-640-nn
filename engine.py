@@ -35,7 +35,7 @@ class Value:
         return out
     
     def __pow__(self, other):
-        assert isinstance(other, (int, float)), "only supporting int/float powers for now"
+        assert isinstance(other, (int, float)), 
         out = Value(self.data**other, (self,), f'**{other}')
 
         def _backward():
@@ -55,7 +55,7 @@ class Value:
     
     def backward(self):
 
-       topological order of all of the children in the graph
+       #topological order of all of the children in the graph 
         topo = []
         visited = set()
         def build_topo(v):
