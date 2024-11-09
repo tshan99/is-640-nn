@@ -1,4 +1,4 @@
-import random
+import random #Generating random numbers
 from engine import Value
 
 class Module:
